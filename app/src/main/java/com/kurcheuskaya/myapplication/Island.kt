@@ -16,9 +16,9 @@ fun main() {
 fun numIslands(grid: Array<CharArray>): Int {
     if (grid.isEmpty() || grid[0].isEmpty()) return 0
     var count = 0
-    val row = grid.size
+    val rows = grid.size
     val cols = grid[0].size
-    for (i in 0 until row) {
+    for (i in 0 until rows) {
         for (j in 0 until cols) {
             if (grid[i][j] == '1') {
                 count++
@@ -29,9 +29,8 @@ fun numIslands(grid: Array<CharArray>): Int {
     return count
 }
 
-fun dfs(grid: Array<CharArray>, i: Int, j: Int) {
-    if (i < 0 || i >= grid.size || j <= 0 || j >= grid[0].size || grid[i][j] == '0')
-        return
+private fun dfs(grid: Array<CharArray>, i: Int, j: Int) {
+    if (i < 0 || i >= grid.size || j < 0 || j >= grid[0].size || grid[i][j] == '0') return
     grid[i][j] = '0'
     dfs(grid, i + 1, j)
     dfs(grid, i - 1, j)
