@@ -1,5 +1,8 @@
 package com.kurcheuskaya.myapplication.Yandex
 
+import java.util.*
+
+
 fun main() {
     println(
         numIslands(
@@ -13,6 +16,18 @@ fun main() {
     )
     println(removeInvalidParentheses(s = "()())()"))
     println(partition("aad"))
+    println(
+        snakesAndLadders(
+            board = arrayOf(
+                intArrayOf(-1, -1, -1, -1, -1, -1),
+                intArrayOf(-1, -1, -1, -1, -1, -1),
+                intArrayOf(-1, -1, -1, -1, -1, -1),
+                intArrayOf(-1, 35, -1, -1, 13, -1),
+                intArrayOf(-1, -1, -1, -1, -1, -1),
+                intArrayOf(-1, 15, -1, -1, -1, -1)
+            )
+        )
+    )
 }
 
 fun numIslands(grid: Array<CharArray>): Int {
@@ -92,6 +107,7 @@ private fun dfs(
         }
     }
 }
+
 fun partition(s: String): List<List<String>> {
     val result = mutableListOf<List<String>>()
     val partition = mutableListOf<String>()
@@ -127,5 +143,51 @@ fun isPalindrome(s: String, start: Int, end: Int): Boolean {
         right--
     }
     return true
+}
+
+fun snakesAndLadders(board: Array<IntArray>): Int {
+    val n = board.size
+    var moves = 0
+    val q: Queue<Int> = LinkedList()
+    val visited = Array(n) {
+        BooleanArray(
+            n
+        )
+    }
+    q.add(1)
+    visited[n - 1][0] = true
+    while (!q.isEmpty()) {
+        val size = q.size
+        for (i in 0 until size) {
+            val currBoardVal = q.poll()
+            if (currBoardVal == n * n) return moves
+            for (diceVal in 1..6) {
+                if (currBoardVal + diceVal > n * n) break
+                val pos = findCoordinates(currBoardVal + diceVal, n)
+                val row = pos[0]
+                val col = pos[1]
+                if (!visited[row][col]) {
+                    visited[row][col] = true
+                    if (board[row][col] == -1) {
+                        q.add(currBoardVal + diceVal)
+                    } else {
+                        q.add(board[row][col])
+                    }
+                }
+            }
+        }
+        moves++
+    }
+    return -1
+}
+
+fun findCoordinates(curr: Int, n: Int): IntArray {
+    val r = n - (curr - 1) / n - 1
+    val c = (curr - 1) % n
+    return if (r % 2 == n % 2) {
+        intArrayOf(r, n - 1 - c)
+    } else {
+        intArrayOf(r, c)
+    }
 }
 
