@@ -1,7 +1,6 @@
 package com.kurcheuskaya.myapplication
 
 import java.util.*
-import kotlin.collections.HashMap
 
 
 fun main() {
@@ -10,6 +9,17 @@ fun main() {
     println(findJudge(n = 3, trust = arrayOf(intArrayOf(1, 3), intArrayOf(2, 3))))
     println(closestMeetingNode(edges = intArrayOf(2, 2, 3, -1), node1 = 0, node2 = 1))
     println(closestMeetingNode(edges = intArrayOf(1, 2, -1), node1 = 0, node2 = 1))
+    println(
+        findCheapestPrice(
+            n = 4, flights = arrayOf(
+                intArrayOf(0, 1, 100),
+                intArrayOf(1, 2, 100),
+                intArrayOf(2, 0, 100),
+                intArrayOf(1, 3, 600),
+                intArrayOf(2, 3, 200)
+            ), src = 1, dst = 3, k = 1
+        )
+    )
 }
 
 var longValue = 1 // variable to store the length of the longest path
@@ -93,3 +103,22 @@ fun closestMeetingNode(edges: IntArray, node1: Int, node2: Int): Int {
     }
     return res
 }
+
+fun findCheapestPrice(n: Int, flights: Array<IntArray>, src: Int, dst: Int, k: Int): Int {
+    var dist = IntArray(n) { Int.MAX_VALUE }
+    dist[src] = 0
+    for (i in 0..k) {
+        val temp = dist.copyOf()
+        for (flight in flights) {
+            val a = flight[0]
+            val b = flight[1]
+            val c = flight[2]
+            if (dist[a] != Int.MAX_VALUE) {
+                temp[b] = minOf(temp[b], dist[a] + c)
+            }
+        }
+        dist = temp
+    }
+    return if (dist[dst] == Int.MAX_VALUE) -1 else dist[dst]
+}
+
