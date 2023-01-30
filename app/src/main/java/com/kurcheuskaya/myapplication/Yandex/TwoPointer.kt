@@ -4,6 +4,7 @@ fun main() {
     println(maxArea(intArrayOf(1, 8, 6, 2, 5, 4, 8, 3, 7)))
     println(maxArea(intArrayOf(2, 3, 10, 5, 7, 8, 9)))
     println(partitionLabels("ababcbacadefegdehijhklij"))
+    println(tribonacci(2))
 }
 
 fun maxArea(height: IntArray): Int {
@@ -40,4 +41,20 @@ fun partitionLabels(s: String): List<Int> {
 
     }
     return result
+}
+
+fun tribonacci(n: Int): Int {
+    if (n == 0) return 0
+    if (n == 1) return 1
+    var t0 = 0
+    var t1 = 1
+    var t2 = 1
+    var tn = 1
+    for (i in 3..n) {
+        tn = t0 + t1 + t2
+        t0 = t1
+        t1 = t2
+        t2 = tn
+    }
+    return tn
 }
