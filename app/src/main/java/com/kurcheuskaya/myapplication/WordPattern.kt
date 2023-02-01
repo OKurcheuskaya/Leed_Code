@@ -2,6 +2,7 @@ package com.kurcheuskaya.myapplication
 
 fun main() {
     println(wordPattern(pattern = "abba", s = "dog cat cat dog"))
+    println(gcdOfStrings(str1 = "ABCABCABC", str2 = "ABCABC"))
     println(
         findAllConcatenatedWordsInADict(
             words = arrayOf(
@@ -41,6 +42,16 @@ fun findAllConcatenatedWordsInADict(words: Array<String>): List<String> {
         wordsSet.add(it)
         result
     }
+}
+fun gcdOfStrings(str1: String, str2: String): String {
+    if (str1 + str2 != str2 + str1) return ""
+    val gcdVal = gcd(str1.length, str2.length)
+    return str2.substring(0, gcdVal)
+}
+
+fun gcd(p: Int, q: Int): Int {
+    return if (q == 0) p else
+        gcd(q, p % q)
 }
 
 private fun Set<String>.isConcatenatedWord(
