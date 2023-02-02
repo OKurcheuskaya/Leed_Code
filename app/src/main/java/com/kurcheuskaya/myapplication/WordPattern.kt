@@ -54,6 +54,31 @@ fun gcd(p: Int, q: Int): Int {
         gcd(q, p % q)
 }
 
+fun isAlienSorted(words: Array<String>, order: String): Boolean {
+    val map = HashMap<Char, Int>()
+    for (i in order.indices) {
+        map[order[i]] = i
+    }
+    for (i in 1 until words.size) {
+        var word1 = words[i - 1]
+        var word2 = words[i]
+        var j = 0
+        while (j < word1.length && j < word2.length) {
+            if (word1[j] != word2[j]) {
+                if (map[word1[j]]!! > map[word2[j]]!!) {
+                    return false
+                }
+                break
+            }
+            j++
+        }
+        if (j == word2.length && word1.length > word2.length) {
+            return false
+        }
+    }
+    return true
+}
+
 private fun Set<String>.isConcatenatedWord(
     word: String,
     cache: MutableMap<String, Boolean>
