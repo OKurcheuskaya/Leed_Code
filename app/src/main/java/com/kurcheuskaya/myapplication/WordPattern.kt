@@ -3,6 +3,7 @@ package com.kurcheuskaya.myapplication
 fun main() {
     println(wordPattern(pattern = "abba", s = "dog cat cat dog"))
     println(gcdOfStrings(str1 = "ABCABCABC", str2 = "ABCABC"))
+    println(zigzagConvert(s = "PAYPALISHIRING", numRows = 3))
     println(
         findAllConcatenatedWordsInADict(
             words = arrayOf(
@@ -30,6 +31,23 @@ fun wordPattern(pattern: String, s: String): Boolean {
 
     }
     return true
+}
+
+fun zigzagConvert(s: String, numRows: Int): String {
+    if (numRows == 1) return s
+    val res = StringBuilder()
+    val cycleLen = 2 * numRows - 2
+    val n = s.length
+    for (i in 0 until numRows) {
+        for (j in 0 until n - i step cycleLen) {
+            res.append(s[i + j])
+            if (i != 0 && i != numRows - 1 && j + cycleLen - i < n) {
+                res.append(s[j + cycleLen - i])
+
+            }
+        }
+    }
+    return res.toString()
 }
 
 fun findAllConcatenatedWordsInADict(words: Array<String>): List<String> {
