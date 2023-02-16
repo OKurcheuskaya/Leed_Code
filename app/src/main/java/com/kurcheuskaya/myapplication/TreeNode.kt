@@ -15,7 +15,12 @@ class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
 }
-
+fun maxDepth(root: TreeNode?): Int {
+    if (root?.`val` == null) return 0
+    val left = maxDepth(root.left)
+    val right = maxDepth(root.right)
+    return maxOf(left, right) + 1
+}
 fun preorderTraversal(root: TreeNode?): List<Int> {
     val list = arrayListOf<Int>()
     val stack = Stack<TreeNode>()
