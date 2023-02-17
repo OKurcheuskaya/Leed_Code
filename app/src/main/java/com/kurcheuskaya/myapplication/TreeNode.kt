@@ -113,6 +113,7 @@ fun dfs(current: Int, graph: Map<Int, List<Int>>, visited: BooleanArray, labels:
 // roads = [[0,1],[0,2],[0,3]], seats = 5
 //  roads = [[3,1],[3,2],[1,0],[0,4],[0,5],[4,6]], seats = 2
 data class R(val cars: Long, val capacity: Int, val fuel: Long)
+
 fun minimumFuelCost(roads: Array<IntArray>, seats: Int): Long {
     val nodes = mutableMapOf<Int, MutableList<Int>>()
     roads.forEach { (from, to) ->
@@ -144,4 +145,22 @@ fun minimumFuelCost(roads: Array<IntArray>, seats: Int): Long {
         return R(cars, capacity, fuel)
     }
     return dfs(0, 0).fuel
+}
+
+/**
+ *Given the root of a Binary Search Tree (BST), return the minimum
+ *difference between the values of any two different nodes in the tree
+ */
+
+var diff = Int.MAX_VALUE
+var prev: Int? = null
+fun minDiffInBST(root: TreeNode?): Int {
+    if (root == null) return Int.MAX_VALUE
+    minDiffInBST(root.left)
+    if (prev != null) {
+        diff = minOf(diff, root.`val` - prev!!)
+    }
+    prev = root.`val`
+    minDiffInBST(root.right)
+    return diff
 }
