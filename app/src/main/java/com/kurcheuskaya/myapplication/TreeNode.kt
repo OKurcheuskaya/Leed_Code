@@ -15,12 +15,14 @@ class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
 }
+
 fun maxDepth(root: TreeNode?): Int {
     if (root?.`val` == null) return 0
     val left = maxDepth(root.left)
     val right = maxDepth(root.right)
     return maxOf(left, right) + 1
 }
+
 fun preorderTraversal(root: TreeNode?): List<Int> {
     val list = arrayListOf<Int>()
     val stack = Stack<TreeNode>()
@@ -163,4 +165,14 @@ fun minDiffInBST(root: TreeNode?): Int {
     prev = root.`val`
     minDiffInBST(root.right)
     return diff
+}
+
+/**
+ * Given the root of a binary tree, invert the tree, and return its root.
+ */
+fun invertTree(root: TreeNode?): TreeNode? = root.let {
+    val temp = it?.left
+    it?.left = invertTree(it?.right)
+    it?.right= invertTree(temp)
+    it
 }
