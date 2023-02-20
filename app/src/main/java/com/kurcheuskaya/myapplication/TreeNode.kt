@@ -173,6 +173,26 @@ fun minDiffInBST(root: TreeNode?): Int {
 fun invertTree(root: TreeNode?): TreeNode? = root.let {
     val temp = it?.left
     it?.left = invertTree(it?.right)
-    it?.right= invertTree(temp)
+    it?.right = invertTree(temp)
     it
+}
+
+/**
+ * Given the root of a binary tree, return the zigzag level order traversal
+ * of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+ */
+fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
+    if (root == null) return listOf()
+    var count = 0
+    var currentList = listOf(root)
+    val ans = mutableListOf<List<Int>>()
+    while (currentList.isNotEmpty()) {
+        if (count++ % 2 == 0) {
+            ans.add(currentList.map { it.`val` })
+        } else {
+            ans.add(currentList.map { it.`val` }.reversed())
+        }
+        currentList = currentList.flatMap { listOfNotNull(it.left, it.right) }
+    }
+    return ans.toList()
 }
