@@ -13,3 +13,18 @@ fun countOdds(low: Int, high: Int): Int {
         ((high - low) / 2) + 1
     }
 }
+fun singleNonDuplicate(nums: IntArray): Int {
+    var s = 0
+    var e = nums.lastIndex
+    while(s < e) {
+        val s1 = nums[s]
+        val s2 = nums[s + 1]
+        val e1 = nums[e]
+        val e2 = nums[e - 1]
+        if (s1 != s2) return s1
+        if (e1 != e2) return e1
+        s += 2
+        e -= 2
+    }
+    return nums[s]
+}
