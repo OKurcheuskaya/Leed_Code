@@ -196,3 +196,26 @@ fun zigzagLevelOrder(root: TreeNode?): List<List<Int>> {
     }
     return ans.toList()
 }
+
+/**
+Given the root of a binary tree, return all duplicate subtrees.
+For each kind of duplicate subtrees, you only need to return the
+root node of any one of them.
+Two trees are duplicate if they have the same structure with the same node values.
+ */
+var res = mutableListOf<TreeNode?>()
+fun findDuplicateSubtrees(root: TreeNode?): List<TreeNode?> {
+    if (root == null) return listOf(root)
+    return check(root.left, root.right)
+}
+
+fun check(root1: TreeNode?, root2: TreeNode?): List<TreeNode?> {
+    if (root1 == null || root2 == null) return res
+
+    if (root1.`val` == root2.`val` && root1.left?.`val` == root2.left?.`val` && root1.right?.`val` == root2.left?.`val`) {
+        res.add(root1)
+        check(root1.right, root1.left)
+        check(root2.right, root2.left)
+    }
+    return res
+}
